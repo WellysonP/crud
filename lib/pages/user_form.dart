@@ -5,14 +5,20 @@ import 'dart:core';
 import '../models/user.dart';
 import '../provider/users.dart';
 
-class UserForm extends StatelessWidget {
+class UserForm extends StatefulWidget {
   const UserForm({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final _form = GlobalKey<FormState>();
-    final Map<String, Object> _formData = {};
+  State<UserForm> createState() => _UserFormState();
+}
 
+class _UserFormState extends State<UserForm> {
+  final _form = GlobalKey<FormState>();
+  final Map<String, Object> _formData = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     final user = ModalRoute.of(context)!.settings.arguments;
     if (user != null) {
       final loadUser = user as User;
@@ -21,7 +27,10 @@ class UserForm extends StatelessWidget {
       _formData["email"] = loadUser.email;
       _formData["avatarUrl"] = loadUser.avatarUrl;
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Formulário de Usuário"),
