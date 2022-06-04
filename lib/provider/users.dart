@@ -20,30 +20,69 @@ class Users with ChangeNotifier {
     return _items.values.elementAt(i);
   }
 
-  void put(User user) {
-    if (user == null) {
-      return;
-    }
+  void addUser(User user) {
+    final id = Random().nextDouble().toString();
+    _items.putIfAbsent(
+      id,
+      () => User(
+        id: id,
+        name: user.name,
+        email: user.email,
+        avatarUrl: user.avatarUrl,
+      ),
+    );
+    notifyListeners();
+  }
 
+  void updateUser(User user) {
     if (user.id != null &&
         user.id.trim().isNotEmpty &&
         _items.containsKey(user.id)) {
       _items.update(user.id, (_) => user);
-    } else {
-      //Adicionar
-      final id = Random().nextDouble().toString();
-      _items.putIfAbsent(
-        id,
-        () => User(
-          id: id,
-          name: user.name,
-          email: user.email,
-          avatarUrl: user.avatarUrl,
-        ),
-      );
     }
-    notifyListeners();
   }
+
+  void saveUser(Map<String, Object> data) {
+    bool hasId = data["id"] != null;
+
+    final user = User(
+      id: hasId ? data["id"] as String : Random().nextDouble().toString(),
+      name: data["name"] as String,
+      email: data["email"] as String,
+      avatarUrl: data["avatarUrl"] as String,
+    );
+
+    if (hasId) {
+      return updateUser(user);
+    } else {
+      return addUser(user);
+    }
+  }
+
+  // void put(User user) {
+  //   if (user == null) {
+  //     return;
+  //   }
+
+  //   if (user.id != null &&
+  //       user.id.trim().isNotEmpty &&
+  //       _items.containsKey(user.id)) {
+  //     _items.update(user.id, (_) => user);
+  //   } else {
+  //     //Adicionar
+  //     final id = Random().nextDouble().toString();
+  //     _items.putIfAbsent(
+  //       id,
+  //       () => User(
+  //         id: id,
+  //         name: user.name,
+  //         email: user.email,
+  //         avatarUrl: user.avatarUrl,
+  //       ),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
 
   void remove(User user) {
     if (user != null && user.id != null) {
