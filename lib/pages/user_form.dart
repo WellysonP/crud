@@ -10,17 +10,16 @@ class UserForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = ModalRoute.of(context)!.settings.arguments as User;
-    print(user.name);
     final _form = GlobalKey<FormState>();
-    final Map<String, String> _formData = {};
+    final Map<String, Object> _formData = {};
 
+    final user = ModalRoute.of(context)!.settings.arguments;
     if (user != null) {
       final loadUser = user as User;
-      _formData["id"] = user.id;
-      _formData["name"] = user.name;
-      _formData["email"] = user.email;
-      _formData["avatarUrl"] = user.avatarUrl;
+      _formData["id"] = loadUser.id;
+      _formData["name"] = loadUser.name;
+      _formData["email"] = loadUser.email;
+      _formData["avatarUrl"] = loadUser.avatarUrl;
     }
 
     return Scaffold(
@@ -31,7 +30,9 @@ class UserForm extends StatelessWidget {
               onPressed: () {
                 final isValid = _form.currentState?.validate() ?? false;
 
-                if (isValid == true) {
+                if (isValid != true) {
+                  return;
+                } else {
                   _form.currentState?.save();
 
                   Provider.of<Users>(context, listen: false)
@@ -49,7 +50,7 @@ class UserForm extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
-                initialValue: _formData["name"]?.toString(),
+                initialValue: _formData["name"]?.toString() ?? "",
                 decoration: InputDecoration(labelText: "Nome"),
                 onSaved: (value) => _formData["name"] = value ?? "",
                 validator: (_value) {
@@ -61,12 +62,12 @@ class UserForm extends StatelessWidget {
                 },
               ),
               TextFormField(
-                initialValue: _formData["email"]?.toString(),
+                initialValue: _formData["email"]?.toString() ?? "",
                 decoration: InputDecoration(labelText: "E-mail"),
                 onSaved: (value) => _formData["email"] = value ?? "",
               ),
               TextFormField(
-                initialValue: _formData["avatarUrl"]?.toString(),
+                initialValue: _formData["avatarUrl"]?.toString() ?? "",
                 decoration: InputDecoration(labelText: "URL do avatar"),
                 onSaved: (value) => _formData["avatarUrl"] = value ?? "",
               ),

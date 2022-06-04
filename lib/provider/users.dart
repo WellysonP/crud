@@ -40,6 +40,7 @@ class Users with ChangeNotifier {
         _items.containsKey(user.id)) {
       _items.update(user.id, (_) => user);
     }
+    notifyListeners();
   }
 
   void saveUser(Map<String, Object> data) {
