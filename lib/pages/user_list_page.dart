@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_crud/components/user_tile.dart';
 import 'package:flutter_crud/models/user.dart';
+import 'package:flutter_crud/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/users.dart';
@@ -18,7 +19,9 @@ class UserListPage extends StatelessWidget {
         title: Text("Lista de usuários"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.USER_FORM);
+            },
             icon: Icon(Icons.add),
           )
         ],

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_crud/routes/app_routes.dart';
+import 'package:provider/provider.dart';
 
 import '../models/user.dart';
+import '../provider/users.dart';
 
 class UserTile extends StatelessWidget {
   final User user;
@@ -14,6 +17,7 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final users = Provider.of<Users>(context);
     final avatar = user.avatarUrl == null || user.avatarUrl.isEmpty
         ? CircleAvatar(
             child: Icon(Icons.person),
@@ -29,7 +33,12 @@ class UserTile extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  AppRoutes.USER_FORM,
+                  arguments: user,
+                );
+              },
               icon: Icon(Icons.edit),
             ),
             IconButton(
