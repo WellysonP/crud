@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 import '../provider/users.dart';
 
 class UserListPage extends StatelessWidget {
-  const UserListPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final users = Provider.of<Users>(context);

@@ -15,7 +15,7 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<Users>(context);
+    final users = Provider.of<Users>(context, listen: false);
     final avatar = user.avatarUrl == null || user.avatarUrl.isEmpty
         ? CircleAvatar(
             child: Icon(Icons.person),
@@ -40,7 +40,30 @@ class UserTile extends StatelessWidget {
               icon: Icon(Icons.edit),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text("Excluir Usuário"),
+                    content: Text("Deseja excluir o usuário?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          users.remove(user);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Sim"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Não"),
+                      ),
+                    ],
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.delete,
                 color: Theme.of(context).errorColor,

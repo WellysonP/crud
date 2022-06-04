@@ -9,14 +9,14 @@ const DUMMY_USERS = {
         'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_960_720.png',
   ),
   '2': User(
-    id: '1',
+    id: '2',
     name: 'Hivila',
     email: 'hivilamaria@gmail.com',
     avatarUrl:
         'https://cdn.pixabay.com/photo/2014/03/24/17/19/teacher-295387_960_720.png',
   ),
   '3': User(
-    id: '1',
+    id: '3',
     name: 'Amanda',
     email: 'amandapontes@gmail.com',
     avatarUrl:
